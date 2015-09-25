@@ -75,6 +75,8 @@ static NSString *const identifier = @"tfcycle";
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     [self.TFCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:50] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    
+    [self addTimer];
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -95,6 +97,16 @@ static NSString *const identifier = @"tfcycle";
      return cell;
 }
 
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    
+}
+
 -(void)setImgsArray:(NSArray *)imgsArray
 {
     _imgsArray = imgsArray;
@@ -110,10 +122,11 @@ static NSString *const identifier = @"tfcycle";
 
 }
 
-
+#pragma mark - 增加定时器
 -(void)addTimer
 {
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     self.timer = timer;
 }
 -(void)destroyTimer
@@ -126,6 +139,15 @@ static NSString *const identifier = @"tfcycle";
 {
     NSIndexPath *currentIndexPath = [[self.TFCollectionView indexPathsForVisibleItems] firstObject];
     
+    NSInteger nextItem = currentIndexPath.item + 1;
+    NSInteger nextSection = currentIndexPath.section;
+    if (nextItem == self.dataArray.count) {
+        nextItem = 0;
+        nextSection++;
+    }
+    
+    NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextItem inSection:nextSection];
+    [self.TFCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
 }
 
 
