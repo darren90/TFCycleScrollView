@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     TFCycleScrollView *cycleView = [[TFCycleScrollView alloc]init];
-    cycleView.frame = CGRectMake(0,100, self.view.frame.size.width, 200);
+    cycleView.frame = CGRectMake(0,0, self.view.frame.size.width, 200);
     self.cycleView = cycleView;
     [self.view addSubview:cycleView];
     

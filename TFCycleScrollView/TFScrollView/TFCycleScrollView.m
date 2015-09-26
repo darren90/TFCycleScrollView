@@ -89,7 +89,7 @@ static int const TFSection = 100;
     [self addTimer];
     
     //
-    self.pageControl.tintColor = [UIColor whiteColor];
+    self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
     self.pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
     self.pageControl.numberOfPages = self.dataArray.count;
     CGSize page1Size = [self.pageControl sizeForNumberOfPages:1];
