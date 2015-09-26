@@ -18,6 +18,9 @@
 @property (nonatomic,strong) UICollectionViewFlowLayout *flowLayout;
 
 
+@property (nonatomic,weak)UIPageControl * pageControl;
+
+
 @property (nonatomic,strong)NSTimer * timer;
 
 @end
@@ -25,6 +28,7 @@
 @implementation TFCycleScrollView
 
 static NSString *const identifier = @"tfcycle";
+static int const TFSection = 100;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -48,6 +52,7 @@ static NSString *const identifier = @"tfcycle";
 
 -(void)initialization
 {
+    //init UICollectionView
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     self.flowLayout = flowLayout;
     UICollectionView *TFCollectionView = [[UICollectionView alloc]initWithFrame:self.frame collectionViewLayout:flowLayout];
@@ -58,9 +63,14 @@ static NSString *const identifier = @"tfcycle";
     TFCollectionView.dataSource = self;
     self.flowLayout = flowLayout;
     TFCollectionView.pagingEnabled = YES;
- 
+    TFCollectionView.showsHorizontalScrollIndicator = NO;
     
     [self.TFCollectionView registerClass:[TFCycleScrollCell class] forCellWithReuseIdentifier:identifier];
+    
+    //init pagecontrol
+    UIPageControl *pageControl = [[UIPageControl alloc]init];
+    self.pageControl = pageControl;
+    [self addSubview:pageControl];
 }
 
 -(void)layoutSubviews
@@ -74,14 +84,25 @@ static NSString *const identifier = @"tfcycle";
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    [self.TFCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:50] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    [self.TFCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TFSection / 2] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     
     [self addTimer];
+    
+    //
+    self.pageControl.tintColor = [UIColor whiteColor];
+    self.pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
+    self.pageControl.numberOfPages = self.dataArray.count;
+    CGSize page1Size = [self.pageControl sizeForNumberOfPages:1];
+    CGFloat pageW = self.dataArray.count * page1Size.width;
+    CGFloat pageH = 20;
+    CGFloat viewH = self.frame.size.height;
+    CGFloat viewW = self.frame.size.width;
+    self.pageControl.frame = CGRectMake(viewW - pageW - 25, viewH - pageH - 6, pageW, pageH);
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 100;
+    return TFSection;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -99,12 +120,18 @@ static NSString *const identifier = @"tfcycle";
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
+    int pageNum = (int)((scrollView.contentOffset.x / self.frame.size.width) + 0.5) % self.dataArray.count;
+    self.pageControl.currentPage = pageNum;
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    
+    [self destroyTimer];
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self addTimer];
 }
 
 -(void)setImgsArray:(NSArray *)imgsArray
@@ -118,26 +145,47 @@ static NSString *const identifier = @"tfcycle";
         [images addObject:model];
     }
     self.dataArray = images;
-//    [self loadImageWithImageURLsGroup:imageURLStringsGroup];
 
 }
 
 #pragma mark - 增加定时器
 -(void)addTimer
 {
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    self.timer = timer;
-}
+     NSLog(@"---addTimer");
+    if (!self.timer) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    }
+ }
 -(void)destroyTimer
 {
+    NSLog(@"---destroyTimer");
     [self.timer invalidate];
     self.timer = nil;
+    NSLog(@"");
 }
+- (NSIndexPath *)resetIndexPath
+{
+    // 当前正在展示的位置
+    NSIndexPath *currentIndexPath = [[self.TFCollectionView indexPathsForVisibleItems] lastObject];
+    // 马上显示回最中间那组的数据
+    NSIndexPath *currentIndexPathReset = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:TFSection/2];
+    [self.TFCollectionView scrollToItemAtIndexPath:currentIndexPathReset atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    return currentIndexPathReset;
+}
+
 
 -(void)goToNext
 {
-    NSIndexPath *currentIndexPath = [[self.TFCollectionView indexPathsForVisibleItems] firstObject];
+    if (!self.timer)  return; //计时器清空了，这个方法还是会调用，
+     NSLog(@"---goToNext");
+//    NSIndexPath *currentIndexPath = [[self.TFCollectionView indexPathsForVisibleItems] lastObject];
+//    
+//    //重新设置位置,中间位置
+//    NSIndexPath *newPath = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:TFSection / 2];
+//    [self.TFCollectionView scrollToItemAtIndexPath:newPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    
+ NSIndexPath *currentIndexPath = [self resetIndexPath];
     
     NSInteger nextItem = currentIndexPath.item + 1;
     NSInteger nextSection = currentIndexPath.section;
@@ -148,6 +196,8 @@ static NSString *const identifier = @"tfcycle";
     
     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextItem inSection:nextSection];
     [self.TFCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+    
+    self.pageControl.currentPage = nextItem;
 }
 
 
