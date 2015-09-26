@@ -13,21 +13,20 @@
 @interface TFCycleScrollView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic,strong)NSArray * dataArray;
-
+/** UICollectionView */
 @property (nonatomic,weak)UICollectionView * TFCollectionView;
+/** UICollectionView的布局 */
 @property (nonatomic,strong) UICollectionViewFlowLayout *flowLayout;
-
-
+/**UIPageControl */
 @property (nonatomic,weak)UIPageControl * pageControl;
-
-
+/**NSTimer对象 */
 @property (nonatomic,strong)NSTimer * timer;
 
 @end
 
 @implementation TFCycleScrollView
-
 static NSString *const identifier = @"tfcycle";
+/**UICollectionView的分组数 */
 static int const TFSection = 100;
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -100,6 +99,7 @@ static int const TFSection = 100;
     self.pageControl.frame = CGRectMake(viewW - pageW - 25, viewH - pageH - 6, pageW, pageH);
 }
 
+#pragma - mark UICollectionView代理
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return TFSection;
@@ -155,8 +155,12 @@ static int const TFSection = 100;
     if (!self.timer) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+        //消息循环，添加到主线程
+        //extern NSString* const NSDefaultRunLoopMode;  //默认没有优先级
+        //extern NSString* const NSRunLoopCommonModes;  //提高优先级
     }
- }
+}
+#pragma mark - 销毁定时器
 -(void)destroyTimer
 {
     NSLog(@"---destroyTimer");
@@ -174,17 +178,9 @@ static int const TFSection = 100;
     return currentIndexPathReset;
 }
 
-
 -(void)goToNext
 {
-    if (!self.timer)  return; //计时器清空了，这个方法还是会调用，
-     NSLog(@"---goToNext");
-//    NSIndexPath *currentIndexPath = [[self.TFCollectionView indexPathsForVisibleItems] lastObject];
-//    
-//    //重新设置位置,中间位置
-//    NSIndexPath *newPath = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:TFSection / 2];
-//    [self.TFCollectionView scrollToItemAtIndexPath:newPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
-    
+    if (!self.timer)  return; //计时器清空了，这个方法还是会调用？？
  NSIndexPath *currentIndexPath = [self resetIndexPath];
     
     NSInteger nextItem = currentIndexPath.item + 1;
@@ -199,7 +195,6 @@ static int const TFSection = 100;
     
     self.pageControl.currentPage = nextItem;
 }
-
 
 -(NSArray *)dataArray
 {
