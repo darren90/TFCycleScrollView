@@ -9,10 +9,8 @@
 #import "ViewController.h"
 #import "TFCycleScrollView.h"
 
-@interface ViewController ()
-
+@interface ViewController ()<CycleScrollViewDelegate>
 @property (nonatomic,weak)TFCycleScrollView *cycleView;
-
 @end
 
 @implementation ViewController
@@ -25,6 +23,7 @@
     cycleView.frame = CGRectMake(0,0, self.view.frame.size.width, 200);
     self.cycleView = cycleView;
     [self.view addSubview:cycleView];
+    cycleView.delegate = self;
     
     // 情景二：采用网络图片实现
     NSArray *imagesURLStrings = @[
@@ -38,9 +37,10 @@
     cycleView.imgsArray = imagesURLStrings;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)cycleScrollViewDidSelectAtIndex:(NSInteger)index
+{
+    NSLog(@"----当前点击的是第%ld个",(long)index);
 }
+
 
 @end

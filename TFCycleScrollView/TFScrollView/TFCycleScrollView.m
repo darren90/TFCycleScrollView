@@ -118,6 +118,13 @@ static int const TFSection = 100;
      return cell;
 }
 
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.delegate respondsToSelector:@selector(cycleScrollViewDidSelectAtIndex:)]) {
+        [self.delegate cycleScrollViewDidSelectAtIndex:indexPath.item];
+    }
+}
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     int pageNum = (int)((scrollView.contentOffset.x / self.frame.size.width) + 0.5) % self.dataArray.count;
@@ -137,6 +144,7 @@ static int const TFSection = 100;
 -(void)setImgsArray:(NSArray *)imgsArray
 {
     _imgsArray = imgsArray;
+    if (imgsArray.count == 0) return;
     
     NSMutableArray *images = [NSMutableArray array];
     for (int i = 0; i < imgsArray.count; i++) {
@@ -151,7 +159,7 @@ static int const TFSection = 100;
 #pragma mark - 增加定时器
 -(void)addTimer
 {
-     NSLog(@"---addTimer");
+//     NSLog(@"---addTimer");
     if (!self.timer) {
         self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
@@ -163,7 +171,7 @@ static int const TFSection = 100;
 #pragma mark - 销毁定时器
 -(void)destroyTimer
 {
-    NSLog(@"---destroyTimer");
+//    NSLog(@"---destroyTimer");
     [self.timer invalidate];
     self.timer = nil;
     NSLog(@"");
