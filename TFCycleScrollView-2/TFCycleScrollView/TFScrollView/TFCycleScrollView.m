@@ -65,7 +65,7 @@ static int const TFSection = 100;
     TFCollectionView.delegate = self;
     TFCollectionView.dataSource = self;
 //    self.flowLayout = flowLayout;
-//    TFCollectionView.pagingEnabled = YES;
+    TFCollectionView.pagingEnabled = YES;
     TFCollectionView.showsHorizontalScrollIndicator = NO;
     
     [self.TFCollectionView registerClass:[TFCycleScrollCell class] forCellWithReuseIdentifier:identifier];
@@ -89,7 +89,7 @@ static int const TFSection = 100;
 //    self.flowLayout.minimumInteritemSpacing = 0;
 //    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
 
-//    [self.TFCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TFSection / 2] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    [self.TFCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TFSection / 2] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 
     [self addTimer];
 
@@ -205,10 +205,10 @@ static int const TFSection = 100;
         NSLog(@"-cell-:%d-:%ld-:%ld",i,(long)path.section,(long)path.item);
 
     }
-//    for (int i = 0 ; i< arr.count ; i++) {
-//        NSIndexPath *path = arr[1];
-//        NSLog(@"-path-:%d-:%ld-:%ld",i,(long)path.section,(long)path.item);
-//    }
+    for (int i = 0 ; i< arr.count ; i++) {
+        NSIndexPath *path = arr[1];
+        NSLog(@"-path-:%d-:%ld-:%ld",i,(long)path.section,(long)path.item);
+    }
 
     // 当前正在展示的位置
 
@@ -216,7 +216,10 @@ static int const TFSection = 100;
 //    if (arr.count == 3) {
 //        currentIndexPath = [self.TFCollectionView indexPathsForVisibleItems][1];
 //    }
-    UICollectionViewCell *cell = sortedIndexPaths[1];
+    UICollectionViewCell *cell = sortedIndexPaths.lastObject;
+    if (sortedIndexPaths.count > 2) {
+        cell = sortedIndexPaths[1];//取在中间的那个元素
+    }
     NSIndexPath *currentIndexPath = [self.TFCollectionView indexPathForCell:cell];
     NSLog(@"-currentIndexPath Row-:%ld,count:%lu,cellCount:%lu",(long)currentIndexPath.item,(unsigned long)arr.count,(unsigned long)arr2.count);
     // 马上显示回最中间那组的数据
