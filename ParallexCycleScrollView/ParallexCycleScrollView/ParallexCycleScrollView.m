@@ -30,7 +30,7 @@
 
 static NSString *const identifier = @"tfcycle";
 /**UICollectionView的分组数 */
-static int const TFSection = 100;
+static int const TFSection = 1;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -83,7 +83,8 @@ static int const TFSection = 100;
     self.flowLayout.minimumInteritemSpacing = 0;
     self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
 
-    [self.TFCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TFSection / 2] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    //TODO
+//    [self.TFCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TFSection / 2] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 
     [self addTimer];
 
@@ -132,6 +133,17 @@ static int const TFSection = 100;
     int pageNum = (int)((scrollView.contentOffset.x / self.frame.size.width) + 0.5) % self.dataArray.count;
     self.pageControl.currentPage = pageNum;
 
+    CGFloat offsetX = scrollView.contentOffset.x;
+    CGFloat width = CGRectGetWidth(scrollView.bounds);
+    if (offsetX > width * (self.dataArray.count + 1)) {
+        offsetX = width;
+        scrollView.contentOffset = CGPointMake(offsetX, 0);
+    }else if (offsetX < 0){
+        offsetX = width * self.dataArray.count;
+        scrollView.contentOffset = CGPointMake(offsetX, 0);
+    }
+
+    //视差 效果 的实现
     NSArray *arrCells = self.TFCollectionView.visibleCells;
     for (CycleScrollViewCell *cell in arrCells) {
         [self handleEffect:cell];
@@ -177,8 +189,8 @@ static int const TFSection = 100;
 {
     //     NSLog(@"---addTimer");
     if (!self.timer) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+//        self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
+//        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
         //消息循环，添加到主线程
         //extern NSString* const NSDefaultRunLoopMode;  //默认没有优先级
         //extern NSString* const NSRunLoopCommonModes;  //提高优先级
@@ -194,8 +206,6 @@ static int const TFSection = 100;
 }
 - (NSIndexPath *)resetIndexPath
 {
-    NSArray *arr = [self.TFCollectionView indexPathsForVisibleItems];
-
     // 当前正在展示的位置
     NSIndexPath *currentIndexPath = [[self.TFCollectionView indexPathsForVisibleItems] lastObject];
     // 马上显示回最中间那组的数据
@@ -217,7 +227,9 @@ static int const TFSection = 100;
     }
 
     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextItem inSection:nextSection];
-    [self.TFCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+    [UIView animateWithDuration:1 animations:^{
+        [self.TFCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+    }];
 
     self.pageControl.currentPage = nextItem;
 }
