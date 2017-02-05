@@ -15,8 +15,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "164"
             endingLineNumber = "164"
-            landmarkName = "-addTimer"
-            landmarkType = "5">
+            landmarkName = "-setImgsArray:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
