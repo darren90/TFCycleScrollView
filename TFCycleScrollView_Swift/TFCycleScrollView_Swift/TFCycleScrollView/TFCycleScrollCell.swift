@@ -11,6 +11,8 @@ import UIKit
 class TFCycleScrollCell: UICollectionViewCell {
     
     let iconView:UIImageView = UIImageView()
+    let scrollView = UIScrollView()
+
     let titleLabel = UILabel()
     
     var model:TFCycleScrollModel?{
@@ -19,16 +21,22 @@ class TFCycleScrollCell: UICollectionViewCell {
                 return
             }
             let url = URL(string: model.imgUrl ?? "")
-            iconView.sd_setImage(with: url, placeholderImage: nil)
+            iconView.sd_setImage(with: url, placeholderImage: UIImage(named: "nopic_780x420"))
         }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        initImg()
     }
     
     func initImg(){
-        contentView.addSubview(iconView)
+        contentView.addSubview(scrollView)
+        scrollView.isScrollEnabled = false
+        scrollView.isUserInteractionEnabled = false
+        
+        scrollView.addSubview(iconView)
         iconView.contentMode = .scaleAspectFill
         iconView.clipsToBounds = true
     }
@@ -37,16 +45,12 @@ class TFCycleScrollCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        iconView.frame = self.bounds
+        scrollView.contentSize = self.bounds.size;
+        scrollView.frame = self.bounds
+        iconView.frame = scrollView.bounds
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
 }

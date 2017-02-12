@@ -10,6 +10,12 @@ import UIKit
 
 let TFSection = 100
 
+public enum CycleScrollType{
+    case normal
+    case parallex
+    //Maybe I will add some transition in the future
+}
+
 protocol TFCycleScrollViewDelegate {
     func cycleScrollViewDidSelectAtIndex(index:Int)
 }
@@ -17,6 +23,8 @@ protocol TFCycleScrollViewDelegate {
 class TFCycleScrollView: UIView {
     
     var deledate:TFCycleScrollViewDelegate?
+    
+    open  var cycleScrollType:CycleScrollType = CycleScrollType.parallex
 
     var imgsArray:[String]?{
         didSet{
@@ -31,13 +39,14 @@ class TFCycleScrollView: UIView {
             for str in imgsArray {
                 let m = TFCycleScrollModel()
                 m.imgUrl = str
-                dataArray?.append(m)
+                dataArray.append(m)
             }
+            pageControl.numberOfPages = dataArray.count
             waterView.reloadData()
         }
     }
 
-    var dataArray:[TFCycleScrollModel]?
+    lazy var dataArray:[TFCycleScrollModel] = [TFCycleScrollModel]()
     lazy var waterView:UICollectionView = UICollectionView(frame: self.frame, collectionViewLayout: UICollectionViewFlowLayout())
     lazy var pageControl:UIPageControl = UIPageControl()
 
@@ -56,27 +65,37 @@ class TFCycleScrollView: UIView {
 
 
     func initSubViews(){
-        self .addSubview(waterView)
+        addSubview(waterView)
         waterView.isPagingEnabled = true
         waterView.delegate = self
         waterView.dataSource = self
         waterView.showsHorizontalScrollIndicator = false
         waterView.backgroundColor = UIColor.white
         waterView.frame = self.bounds
-        waterView.register(TFCycleScrollCell.self, forCellWithReuseIdentifier: "cycleCell")
+        waterView.register(TFCycleScrollCell.self, forCellWithReuseIdentifier: "TFCycleScrollCell")
+        waterView.register(TFCycleCell.self, forCellWithReuseIdentifier: "TFCycleCell")
+
 
         let flowLayout = waterView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.itemSize = CGSize(width: frame.width, height: frame.height)
         flowLayout.scrollDirection = .horizontal
+        
+        addSubview(pageControl)
+        pageControl.pageIndicatorTintColor = UIColor.white
+        pageControl.currentPageIndicatorTintColor = UIColor.blue
+        pageControl.numberOfPages = dataArray.count
     }
 
 
     override func layoutSubviews() {
         super.layoutSubviews()
 
-
+        let page1Size = pageControl.size(forNumberOfPages: 1)
+        let pageW = CGFloat(dataArray.count) * page1Size.width
+        let pageH:CGFloat = 20
+        pageControl.frame = CGRect(x: self.frame.width - pageW - 25, y: self.frame.height - pageH - 6, width: pageW, height: pageH)
     }
 
     func addTimer(){
@@ -108,7 +127,7 @@ class TFCycleScrollView: UIView {
         let currentIndexPath = resetIndexPath()
         var nexItem = currentIndexPath.item + 1
         var nexSection = currentIndexPath.section
-        if nexItem == dataArray?.count {
+        if nexItem == dataArray.count {
             nexItem = 0
             nexSection = nexSection + 1
         }
@@ -127,14 +146,13 @@ extension TFCycleScrollView : UICollectionViewDataSource,UICollectionViewDelegat
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataArray?.count ?? 0
+        return dataArray.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cycleCell", for: indexPath) as! TFCycleScrollCell
-        let model = dataArray?[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TFCycleScrollCell", for: indexPath) as! TFCycleScrollCell
+        let model = dataArray[indexPath.item]
         cell.model = model
-        cell.backgroundColor = UIColor.red
         return cell
     }
 
@@ -147,8 +165,29 @@ extension TFCycleScrollView : UICollectionViewDataSource,UICollectionViewDelegat
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let pageNum = Float(((Float(scrollView.contentOffset.x) / Float(self.frame.width)) + 0.5)) % (Float(dataArray!.count))
-//        pageControl.currentPage  = Int(pageNum)
+//        let pageNum = CGFloat(((CGFloat(scrollView.contentOffset.x) / CGFloat(self.frame.width)) + 0.5)) % (CGFloat(dataArray.count))
+        let chushu = CGFloat(((CGFloat(scrollView.contentOffset.x) / CGFloat(self.frame.width)) + 0.5))
+        let beichushi = (CGFloat(dataArray.count))
+        let pageNum = chushu.truncatingRemainder(dividingBy: beichushi)
+        pageControl.currentPage  = Int(pageNum)
+        
+        waterView.visibleCells.forEach { (cell) in
+            if let bannerCell = cell as? TFCycleScrollCell{
+                handleEffect(bannerCell)
+            }
+        }
+
+    }
+
+    fileprivate func handleEffect(_ cell:TFCycleScrollCell){
+        switch cycleScrollType {
+        case .parallex:
+            let minusX = self.waterView.contentOffset.x - cell.frame.origin.x
+            let imageOffsetX = -minusX * 0.5;
+            cell.scrollView.contentOffset = CGPoint(x: imageOffsetX, y: 0)
+        default:
+            break
+        }
     }
 
 }

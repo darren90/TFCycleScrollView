@@ -187,9 +187,9 @@
 		FEA41A241E50603E00F1641F /* TFCycleScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				FEA41A281E50603E00F1641F /* TFCycleScrollView.swift */,
 				FEA41A251E50603E00F1641F /* TFCycleScrollCell.swift */,
 				FEA41A271E50603E00F1641F /* TFCycleScrollModel.swift */,
-				FEA41A281E50603E00F1641F /* TFCycleScrollView.swift */,
 			);
 			path = TFCycleScrollView;
 			sourceTree = "<group>";
