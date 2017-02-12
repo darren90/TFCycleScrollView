@@ -73,8 +73,6 @@ class TFCycleScrollView: UIView {
         waterView.backgroundColor = UIColor.white
         waterView.frame = self.bounds
         waterView.register(TFCycleScrollCell.self, forCellWithReuseIdentifier: "TFCycleScrollCell")
-        waterView.register(TFCycleCell.self, forCellWithReuseIdentifier: "TFCycleCell")
-
 
         let flowLayout = waterView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayout.minimumLineSpacing = 0
