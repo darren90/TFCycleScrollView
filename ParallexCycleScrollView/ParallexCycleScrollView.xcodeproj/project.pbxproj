@@ -625,6 +625,7 @@
 				89FC91171DDC691000E97296 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89FC91181DDC691000E97296 /* Build configuration list for PBXNativeTarget "ParallexCycleScrollViewTests" */ = {
 			isa = XCConfigurationList;
@@ -633,6 +634,7 @@
 				89FC911A1DDC691000E97296 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89FC911B1DDC691000E97296 /* Build configuration list for PBXNativeTarget "ParallexCycleScrollViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -641,6 +643,7 @@
 				89FC911D1DDC691000E97296 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

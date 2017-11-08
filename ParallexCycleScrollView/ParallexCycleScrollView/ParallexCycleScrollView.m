@@ -30,7 +30,7 @@
 
 static NSString *const identifier = @"tfcycle";
 /**UICollectionView的分组数 */
-static int const TFSection = 1;
+static int const TFSection = 100;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
