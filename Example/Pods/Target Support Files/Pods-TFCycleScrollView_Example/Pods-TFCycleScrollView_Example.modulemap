@@ -1,0 +1,6 @@
+framework module Pods_TFCycleScrollView_Example {
+  umbrella header "Pods-TFCycleScrollView_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

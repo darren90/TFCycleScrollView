@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'TFCycleScrollView_Example' do
+  pod 'TFCycleScrollView', :path => '../'
+
+#  target 'TFCycleScrollView_Tests' do
+#    inherit! :search_paths
+
+#    pod 'FBSnapshotTestCase'
+#  end
+end

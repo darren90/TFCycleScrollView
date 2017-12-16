@@ -1,0 +1,28 @@
+{
+  "name": "TFCycleScrollView",
+  "version": "0.1.0",
+  "summary": "A short description of TFCycleScrollView.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/1005052145@qq.com/TFCycleScrollView",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "1005052145@qq.com": "1005052145@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/1005052145@qq.com/TFCycleScrollView.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "source_files": "TFCycleScrollView/Classes/**/*",
+  "public_header_files": "TFCycleScrollView/Classes/**/*.{h,m}",
+  "dependencies": {
+    "SDWebImage": [
+      "~>3.7"
+    ]
+  }
+}

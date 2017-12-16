@@ -1,0 +1,6 @@
+framework module TFCycleScrollView {
+  umbrella header "TFCycleScrollView-umbrella.h"
+
+  export *
+  module * { export * }
+}
