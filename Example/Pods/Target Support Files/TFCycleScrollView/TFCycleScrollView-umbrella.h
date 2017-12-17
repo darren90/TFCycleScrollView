@@ -10,10 +10,12 @@
 #endif
 #endif
 
-#import "CycleScrollViewCell.h"
-#import "CycleScrollViewCell.m"
-#import "ParallexCycleScrollView.h"
-#import "ParallexCycleScrollView.m"
+#import "TFCycleScrollCell.h"
+#import "TFCycleScrollCell.m"
+#import "TFCycleScrollModel.h"
+#import "TFCycleScrollModel.m"
+#import "TFCycleScrollView.h"
+#import "TFCycleScrollView.m"
 
 FOUNDATION_EXPORT double TFCycleScrollViewVersionNumber;
 FOUNDATION_EXPORT const unsigned char TFCycleScrollViewVersionString[];

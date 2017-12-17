@@ -14,12 +14,15 @@ typedef NS_ENUM(NSInteger, ParallexBannerTransition){
 
 
 @class TFCycleScrollView;
-@protocol ParallexCycleDeledate <NSObject>
-@optional
--(void)rarallexCycle:(TFCycleScrollView *)parallexCycleScrollView didClickAtIndex:(NSInteger)index;
+@protocol TFCycleScrollViewDeledate <NSObject>
 
--(void)rarallexCycle:(TFCycleScrollView *)parallexCycleScrollView didScrollToIndex:(NSInteger)index;
+@optional
+-(void)cycleScrollView:(TFCycleScrollView *)cycleScrollView didClickAtIndex:(NSInteger)index title:(NSString *)title;
+
+-(void)cycleScrollView:(TFCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index;
 @end
+
+
 
 @protocol ParallexCycleDataSource<NSObject>
 @optional
@@ -31,18 +34,13 @@ typedef NS_ENUM(NSInteger, ParallexBannerTransition){
 
 @interface TFCycleScrollView : UIView
 
-@property (nonatomic, assign) id<ParallexCycleDeledate>delegate;
+@property (nonatomic, assign) id<TFCycleScrollViewDeledate>delegate;
 
 @property (nonatomic, assign) id<ParallexCycleDataSource>dataSouce;
 
-
-
-
-@property (nonatomic,strong)NSArray * imgsArray;
+@property (nonatomic,strong)NSArray *imgsArray;
+@property (nonatomic,strong)NSArray *titlsArray;
 
 @property (nonatomic,copy)NSString * placeholderImage;
-
-
-//@property (nonatomic,weak)id<CycleScrollViewDelegate> delegate;
 
 @end

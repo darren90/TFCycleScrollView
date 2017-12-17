@@ -36,9 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		04573536F939E0443021D444 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		04573536F939E0443021D444 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		270B74BFE1D7CF33930CDA85 /* Pods_TFCycleScrollView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFCycleScrollView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3747D89C080638BD9DE4F4CB /* TFCycleScrollView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = TFCycleScrollView.podspec; path = ../TFCycleScrollView.podspec; sourceTree = "<group>"; };
+		3747D89C080638BD9DE4F4CB /* TFCycleScrollView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = TFCycleScrollView.podspec; path = ../TFCycleScrollView.podspec; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* TFCycleScrollView_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFCycleScrollView_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -60,7 +60,7 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		AE5C25B8C9B9C34920704530 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		AE5C25B8C9B9C34920704530 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CB20274008FC32F5B2AB9CE1 /* Pods_TFCycleScrollView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFCycleScrollView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1BD2E640F910DF7A038C3B0 /* Pods-TFCycleScrollView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFCycleScrollView_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TFCycleScrollView_Example/Pods-TFCycleScrollView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		E2548312020801DBB6B52791 /* Pods-TFCycleScrollView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFCycleScrollView_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-TFCycleScrollView_Example/Pods-TFCycleScrollView_Example.release.xcconfig"; sourceTree = "<group>"; };
