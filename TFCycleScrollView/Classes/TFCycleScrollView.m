@@ -87,8 +87,9 @@ static int const TFSection = 100;
     self.pageControl.pageIndicatorTintColor = [UIColor whiteColor];
     self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:90 / 255.0 green:141 / 255.0 blue:209 / 255.0 alpha:1.0];
     self.pageControl.numberOfPages = self.dataArray.count;
-    CGSize page1Size = [self.pageControl sizeForNumberOfPages:1];
-    CGFloat pageW = self.dataArray.count * page1Size.width;
+//    CGSize page1Size = [self.pageControl sizeForNumberOfPages:1];
+//    [self.pageControl sizeToFit];
+    CGFloat pageW = [self.pageControl sizeForNumberOfPages:self.dataArray.count].width;//self.dataArray.count * page1Size.width;
     CGFloat pageH = 18;
     CGFloat viewH = self.frame.size.height;
     CGFloat viewW = self.frame.size.width;
@@ -138,9 +139,7 @@ static int const TFSection = 100;
     NSArray *arrCells = self.TFCollectionView.visibleCells;
     for (TFCycleScrollCell *cell in arrCells) {
         [self handleEffect:cell];
-    }
-    
-    //[arrCells makeObjectsPerformSelector:@selector(handleEffect:)];
+    }    
 }
 
 
@@ -178,8 +177,8 @@ static int const TFSection = 100;
 -(void)addTimer {
     //     NSLog(@"---addTimer");
     if (!self.timer) {
-        //        self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
-        //        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+//        self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(goToNext) userInfo:nil repeats:YES];
+//        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
         //消息循环，添加到主线程
         //extern NSString* const NSDefaultRunLoopMode;  //默认没有优先级
         //extern NSString* const NSRunLoopCommonModes;  //提高优先级
@@ -214,9 +213,9 @@ static int const TFSection = 100;
     }
     
     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextItem inSection:nextSection];
-    [UIView animateWithDuration:1 animations:^{
+//    [UIView animateWithDuration:1 animations:^{
         [self.TFCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
-    }];
+//    }];
     
     self.pageControl.currentPage = nextItem;
 }

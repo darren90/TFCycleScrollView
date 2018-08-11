@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, ParallexBannerTransition){
 @property (nonatomic, assign) id<ParallexCycleDataSource>dataSouce;
 
 @property (nonatomic,strong)NSArray *imgsArray;
+
 @property (nonatomic,strong)NSArray *titlsArray;
 
 @property (nonatomic,copy)NSString * placeholderImage;
